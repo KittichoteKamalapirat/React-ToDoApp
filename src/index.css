@@ -1,14 +1,95 @@
-body {
+html{
+  height:auto;
+  min-height: 100%;
+  color: white;
+  font-size: 14px;
+}
+  body {
   margin: 0;
+  background-image: linear-gradient(to right top, #22b573, #44c165, #65cb53, #86d53c, #aadd17);
+  background-repeat: no-repeat;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.container{
+  width: 30%;
+  text-align: center;
+  margin: 5rem auto;
+  
 }
+
+h1{
+  font-size: 4rem;
+}
+
+input{
+  width: 100%;
+  height: 2rem;
+  border-radius: 5px;
+  border-style: none;
+  font-size: 1rem;
+}
+ul{
+  margin: 3rem;
+}
+li{
+  list-style: none;
+  margin: 1rem;
+  font-weight: 300;
+  font-size: 1.2rem;
+  text-align: left;
+}
+
+
+/* CSS for check box */
+input[type=checkbox] + label {
+  display: block;
+  margin: 0.2em;
+  cursor: pointer;
+  padding: 0.2em;
+}
+
+input[type=checkbox] {
+  display: none;
+}
+
+input[type=checkbox] + label:before {
+  content: "\2714";
+  border: 0.11em solid white;
+  border-radius: 0.2em;
+  display: inline-block;
+  width: 1.2em;
+  height: 1.2em;
+  padding-left: 0.2em;
+  padding-bottom: 0.3em;
+  margin-right: 0.2em;
+  vertical-align: bottom;
+  color: transparent;
+  transition: .2s;
+  margin-right: 1rem;
+}
+
+input[type=checkbox] + label:active:before {
+  transform: scale(0);
+}
+
+input[type=checkbox]:checked + label:before {
+  background-color: white;
+  border-color: white;
+  color: MediumSeaGreen;
+}
+
+input[type=checkbox]:disabled + label:before {
+  transform: scale(1);
+  border-color: #aaa;
+}
+
+input[type=checkbox]:checked:disabled + label:before {
+  transform: scale(1);
+  background-color: #bfb;
+  border-color: #bfb;
+}
+
+/* CSS for check box */
