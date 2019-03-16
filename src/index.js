@@ -11,11 +11,6 @@ var config = {
     storageBucket: "react-to-do-list-a8f6d.appspot.com",
     messagingSenderId: "673689778313"
 };
-firebase.initializeApp(config);
-
-const database = firebase.database();
-const ref = database.ref('todos');
-
 
 
 
@@ -23,6 +18,8 @@ const ref = database.ref('todos');
 class Index extends React.Component {
     constructor(props) {
         super(props)
+        this.app = firebase.initializeApp(config)
+        this.ref = this.app.database().ref('todos')
         this.state = {
             todo: '',
             todos: [],
@@ -31,6 +28,22 @@ class Index extends React.Component {
         this.handleInput = this.handleInput.bind(this)
         this.addTask = this.addTask.bind(this)
         this.check = this.check.bind(this)
+    }
+
+    componentWillMount() {
+        const previousNotes = this.state.todos
+        console.log('component Will Mount', previousNotes)
+        this.ref.on('child_added', snapshot => {
+            previousNotes.push(
+                snapshot.val()
+            )
+// this has to be inside the 'on'  why? might have soething to do with childadded?
+            this.setState({
+                todos: previousNotes
+            })
+        })
+        //this push here is javascript push
+     
     }
     handleInput(e) {
         this.setState({
@@ -43,7 +56,7 @@ class Index extends React.Component {
                 todos: this.state.todos.concat(this.state.todo)
             })
             e.target.value = ''
-            ref.push(this.state.todo)
+            this.ref.push(this.state.todo)
         }
     }
     check(e) {
@@ -56,39 +69,23 @@ class Index extends React.Component {
 
 
     render() {
-
-        ref.on('value', gotData, errData)
-
-        function gotData(data) {
-            let todos = data.val()
-            // console.log(todos)
-            let keys = Object.keys(todos)
-            // console.log(keys)
-            for (let i = 0; i < keys.length; i++) {
-                let key = keys[i]
-                let todo = todos[key]
-                console.log(todo)
-            }
-        }
-
-        function errData(err) {
-            console.log('Error !')
-            console.log(err)
-        }
-
+        console.log('log below', this.state.todos)
+        // let array = [1,2,3,4]
         return (
             <div className='container'>
                 <h1>To Do List</h1>
                 <input value={this.state.term} onKeyDown={this.addTask} onChange={this.handleInput} placeholder="  Add your tasks here"></input>
                 <ul>
-                    {this.state.todos.map(x => {
+                    {this.state.todos.map(note => {
                         return (
                             <li>
-                                <input type="checkbox" id={x} name={x} value={x} />
-                                <label for={x}>{x}</label>
+                                <input type="checkbox" id={note} name={note} value={note} />
+                                <label for={note}>{note}</label>
+                                {console.log(note)}
                             </li>
                         )
-                    })}
+                    })
+                    }
                 </ul>
             </div>
         )
